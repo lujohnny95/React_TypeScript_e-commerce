@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { Badge, Drawer, LinearProgress, Grid } from "@material-ui/core"
+import { Badge, Drawer, LinearProgress, Grid, AppBar, Toolbar, IconButton, Typography } from "@material-ui/core"
 import { AddShoppingCart } from "@material-ui/icons";
 //components
 import Item from "./Item/Item";
@@ -75,15 +75,21 @@ function App() {
 
 
   return (
+    <>
+    <AppBar>
+      <Toolbar>
+        <Typography>Net-Shopper</Typography>
+        <StyledButton onClick={() => setCartOpen(true)}>
+          <Badge badgeContent={getTotalItems(cartItems)} color="secondary">
+            <AddShoppingCart />
+          </Badge>
+        </StyledButton>
+      </Toolbar>
+    </AppBar>
     <Wrapper>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart cartItems={cartItems} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
       </Drawer>
-      <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color="error">
-          <AddShoppingCart />
-        </Badge>
-      </StyledButton>
       <Grid container spacing={3}>
         {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
@@ -92,6 +98,7 @@ function App() {
         ))}
       </Grid>
     </Wrapper>
+    </>
   );
 }
 
